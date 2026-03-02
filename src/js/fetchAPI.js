@@ -71,9 +71,45 @@ function verDetalle(id) {
                 <p>Suite: ${usuario.address.suite}</p>
                 <p>Compañía: ${usuario.company.name}</p>
                 <p>CatchPhrase: ${usuario.company.catchPhrase}</p>
+                <button onclick="actualizarUsuario(${usuario.id})">Actualizar</button>
             `;
         })
         .catch(error => {
             console.error("Error capturado en detalle:", error);
         });
+}
+
+function actualizarUsuario(id) {
+    const nombre = document.getElementById("nombre").value;
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const website = document.getElementById("website").value;
+
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: nombre,
+            username: username,
+            email: email,
+            phone: phone,
+            website: website
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error en la petición PATCH: " + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("PATCH ejecutado correctamente:", data);
+        alert("Actualización simulada correctamente. Revisar consola.");
+    })
+    .catch(error => {
+        console.error("Error capturado en PATCH:", error);
+    });
 }
