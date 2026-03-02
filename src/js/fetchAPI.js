@@ -100,19 +100,19 @@ function actualizarUsuario(id) {
             website: website
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error en la petición PATCH: " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("PATCH ejecutado correctamente:", data);
-        alert("Actualización simulada correctamente. Revisar consola.");
-    })
-    .catch(error => {
-        console.error("Error capturado en PATCH:", error);
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la petición PATCH: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("PATCH ejecutado correctamente:", data);
+            alert("Actualización simulada correctamente. Revisar consola.");
+        })
+        .catch(error => {
+            console.error("Error capturado en PATCH:", error);
+        });
 }
 
 function eliminarUsuario(id) {
@@ -120,17 +120,42 @@ function eliminarUsuario(id) {
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
         method: "DELETE"
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error en la petición DELETE: " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("DELETE ejecutado correctamente:", data);
-        alert("Eliminación simulada correctamente. Revisar consola.");
-    })
-    .catch(error => {
-        console.error("Error capturado en DELETE:", error);
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la petición DELETE: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("DELETE ejecutado correctamente:", data);
+            alert("Eliminación simulada correctamente. Revisar consola.");
+        })
+        .catch(error => {
+            console.error("Error capturado en DELETE:", error);
+        });
+}
+
+function mostrarImagenAleatoria() {
+    const imagenes = [
+        './img/1437245.svg',
+        './img/3239101.svg',
+        './img/Halo-Para-Dibujar.svg',
+        './img/skull.svg'
+    ];
+
+    const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+    const rutaImagen = imagenes[indiceAleatorio];
+    var img = document.getElementById('imagenBlob');
+
+    fetch(rutaImagen)
+        .then(response => response.blob())
+        .then(imagen => {
+            console.log("Imagen obtenida:", imagen);
+            var imgPath = URL.createObjectURL(imagen);
+            img.src = imgPath;
+            img.style.display = 'block';
+        })
+        .catch(error => {
+            console.error("Error al cargar la imagen", error);
+        });
 }
