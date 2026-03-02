@@ -72,6 +72,7 @@ function verDetalle(id) {
                 <p>Compañía: ${usuario.company.name}</p>
                 <p>CatchPhrase: ${usuario.company.catchPhrase}</p>
                 <button onclick="actualizarUsuario(${usuario.id})">Actualizar</button>
+                <button onclick="eliminarUsuario(${usuario.id})">Eliminar</button>
             `;
         })
         .catch(error => {
@@ -111,5 +112,25 @@ function actualizarUsuario(id) {
     })
     .catch(error => {
         console.error("Error capturado en PATCH:", error);
+    });
+}
+
+function eliminarUsuario(id) {
+
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+        method: "DELETE"
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error en la petición DELETE: " + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("DELETE ejecutado correctamente:", data);
+        alert("Eliminación simulada correctamente. Revisar consola.");
+    })
+    .catch(error => {
+        console.error("Error capturado en DELETE:", error);
     });
 }
